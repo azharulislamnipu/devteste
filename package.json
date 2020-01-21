@@ -7,7 +7,7 @@
     "dev": "webpack-dev-server --mode development --open",
     "start": "node server.js",
     "prod": "webpack --config=webpack.config.js",
-    "heroku-postbuild": "webpack -p"
+    "heroku-postbuild": "webpack --config=webpack.config.js"
   },
   "author": "rajesh babu",
   "license": "MIT",
