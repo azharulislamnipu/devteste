@@ -10,29 +10,32 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: "[name]_[local]_[hash:base64]",
-              sourceMap: true,
-              minimize: true
-            }
-          }
-        ]
+        test: /\.(js|jsx)$/,
+        use: {loader: 'babel-loader'},
+        exclude: /node_modules/
+        },
+        {
+          test: /\.(sa|sc|c)ss$/,
+            use: [
+                {
+                    loader:MiniCssExtractPlugin.loader
+                }
+                , 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap','postcss-loader']
+                
+        },
+      
+        {
+          test: /\.(gif|png|jpe?g|svg|svg|woff|woff2|ttf|eot)$/i,
+          use: [
+              {
+                loader: 'url-loader',
+                options: {
+                  outputPath: 'images',
+                  limit:154000,
+                  name: '[name].[ext]?[hash]'
+                }
+              }
+              ,'image-webpack-loader']
       }
     ]
   }
