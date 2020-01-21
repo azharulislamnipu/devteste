@@ -7,8 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 var ImageminPlugin = require('imagemin-webpack-plugin').default;
 module.exports = {
   entry: {
-    app:'./src/index.js',
-    vendor: ['jquery','lodash']
+    app:'./src/index.js'
   },
   mode:'production',
   output: {
