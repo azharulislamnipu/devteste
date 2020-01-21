@@ -6,49 +6,75 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 var ImageminPlugin = require('imagemin-webpack-plugin').default;
 module.exports = {
-
-  entry: [
-    './src/index.js'
-  ],
+  entry: {
+    app:'./src/index.js'
+  },
   mode:'production',
   output: {
-    path: path.resolve(__dirname, 'src'),
-    publicPath: '/',
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'public'),
+    filename: 'assets/js/[name][chunkhash].js',
   },
+  optimization: {
+    splitChunks:{
+      chunks:'all'
+    },
+    minimize: true,
+    minimizer: [
+      new TerserPlugin(),
+      new OptimizeCSSAssetsPlugin()
+    ]
+  },
+
   module: {
     rules: [
-      {
+        {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
+          loader: 'babel-loader'
+        },
+        exclude: /node_modules/,
+        },
+        {
+          test: /\.(sa|sc|c)ss$/,
+            use: [
+                {
+                    loader:MiniCssExtractPlugin.loader
+                }
+                , 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap','postcss-loader']
+                
+        },
+        {
+          test: /\.(gif|png|jpe?g|svg|svg|woff|woff2|ttf|eot)$/i,
           use: [
               {
-                  loader:MiniCssExtractPlugin.loader
+                loader: 'url-loader',
+                options: {
+                  outputPath: 'assets/images',
+                  limit:154000,
+                  name: '[name].[ext]?[hash]'
+                }
               }
-              , 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap','postcss-loader']
-              
-      },
-      {
-        test: /\.(gif|png|jpe?g|svg|svg|woff|woff2|ttf|eot)$/i,
-        use: [
-            {
-              loader: 'url-loader',
-              options: {
-                outputPath: 'assets/images',
-                limit:154000,
-                name: '[name].[ext]?[hash]'
-              }
-            }
-            ,'image-webpack-loader']
-    }
+              ,'image-webpack-loader']
+      }
     ]
-  }
+  
+  },
 
-
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "assets/css/styles.css",
+    }),
+    new HtmlWebpackPlugin({  // Also generate a test.html
+      template: path.resolve(__dirname, 'src/', 'index.html'),
+      filename: 'index.html',
+        inject: true
+      }),
+      new ImageminPlugin(),
+      new CleanWebpackPlugin()
+  ],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+}
 };
