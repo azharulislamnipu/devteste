@@ -12,7 +12,7 @@ module.exports = {
   mode:'production',
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: 'assets/js/[name][chunkhash].js',
+    filename: 'assets/js/[name][chunkhash].js'
   },
   optimization: {
     splitChunks:{
@@ -29,9 +29,7 @@ module.exports = {
     rules: [
         {
         test: /\.(js|jsx)$/,
-        use: {
-          loader: 'babel-loader'
-        },
+        use: {loader: 'babel-loader'},
         exclude: /node_modules/,
         },
         {
