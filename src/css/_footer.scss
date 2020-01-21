@@ -1,0 +1,12 @@
+            /*  13. Footer CSS
+/*----------------------------------------*/
+.footer-area{    position: relative; overflow: hidden; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s; margin-top: 0px; margin-bottom: 0px; background-color: #1c1840; 
+   p{       color:#ffffff; }
+}
+.footer-wedget{
+    h2{        color:#ffffff; font-family:$playfair; 
+           @media #{$xss-layout} { text-align:left !important; }
+    }
+
+     @media #{$xss-layout} { text-align:left !important; margin-bottom:40px; }
+}
