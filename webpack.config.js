@@ -1,11 +1,5 @@
-const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
-var ImageminPlugin = require('imagemin-webpack-plugin').default;
+
 
 module.exports = {
   entry: [
@@ -15,16 +9,6 @@ module.exports = {
     path: __dirname,
     publicPath: '/',
     filename: 'bundle.js'
-  },
-  optimization: {
-    splitChunks:{
-      chunks:'all'
-    },
-    minimize: true,
-     minimizer: [
-      new TerserPlugin(),
-      new OptimizeCSSAssetsPlugin()
-    ]
   },
   module: {
     rules: [
@@ -57,23 +41,6 @@ module.exports = {
               ,'image-webpack-loader']
       }
     ]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new MiniCssExtractPlugin({
-      filename: "styles.css",
-    }),
-    new HtmlWebpackPlugin({  // Also generate a test.html
-      template: path.resolve(__dirname, 'src/', 'index.html'),
-      filename: 'index.html',
-        inject: true
-      }),
-    
-      new ImageminPlugin(),
-      new CleanWebpackPlugin()
-  ],
+  }
+  
 };
