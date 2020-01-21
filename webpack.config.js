@@ -12,7 +12,7 @@ module.exports = {
   mode:'production',
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: 'assets/js/[name][chunkhash].js'
+    filename: 'assets/js/[name][chunkhash].js',
   },
   optimization: {
     splitChunks:{
